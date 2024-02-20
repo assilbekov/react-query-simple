@@ -1,6 +1,6 @@
 {
   "name": "react-query-simple",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Work with react-query in a simple way and don't write boilerplate code",
   "main": "index.ts",
   "scripts": {
@@ -9,6 +9,21 @@
   "dependencies": {
     "@tanstack/react-query": "^5.21.7"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/assilbekov/react-query-simple"
+  },
+  "homepage": "https://github.com/assilbekov/react-query-simple",
+  "keywords": [
+    "react",
+    "react-query",
+    "api",
+    "hooks",
+    "state management",
+    "boilerplate reduction",
+    "react query",
+    "api calls"
+  ],
   "author": "",
   "license": "ISC"
 }
