@@ -1,32 +1,43 @@
 import { useMutation, useQuery, useQueryClient, UseMutationResult, UseQueryResult } from "@tanstack/react-query";
 
-
 type TData = {
   [key: string]: any
 };
 
-type ListHookData<T extends string> = {
-  [K in `useGet${Capitalize<T>}sQuery`]: () => UseQueryResult;
+type ListHookData<T extends string, R = TData[]> = {
+  [K in `useGet${Capitalize<T>}sQuery`]: () => UseQueryResult<R>;
 }
 
-type GetHookData<T extends string> = {
-  [K in `useGet${Capitalize<T>}Query`]: (id: number) => UseQueryResult;
+type GetHookData<T extends string, R = TData> = {
+  [K in `useGet${Capitalize<T>}Query`]: (id: number) => UseQueryResult<R>;
 }
 
-type CreateHookData<T extends string> = {
-  [K in `useCreate${Capitalize<T>}Mutation`]: () => UseMutationResult;
+type CreateHookData<T extends string, R = TData> = {
+  [K in `useCreate${Capitalize<T>}Mutation`]: () => UseMutationResult<R>;
 }
 
-type UpdateHookData<T extends string> = {
-  [K in `useUpdate${Capitalize<T>}Mutation`]: () => UseMutationResult;
+type UpdateHookData<T extends string, R = TData> = {
+  [K in `useUpdate${Capitalize<T>}Mutation`]: () => UseMutationResult<R>;
 }
 
-type DeleteHookData<T extends string> = {
-  [K in `useDelete${Capitalize<T>}Mutation`]: () => UseMutationResult;
+type DeleteHookData<T extends string, R = void> = {
+  [K in `useDelete${Capitalize<T>}Mutation`]: () => UseMutationResult<R>;
 }
 
-type RData<T extends string> = ListHookData<T> & GetHookData<T> & CreateHookData<T> & UpdateHookData<T> & DeleteHookData<T>;
+type RData<
+  T extends string,
+  ListResponse = T[],
+  GetResponse = T,
+  CreateResponse = T,
+  UpdateResponse = T,
+  DeleteResponse = void
+> = ListHookData<T, ListResponse> &
+  GetHookData<T, GetResponse> &
+  CreateHookData<T, CreateResponse> &
+  UpdateHookData<T, UpdateResponse> &
+  DeleteHookData<T, DeleteResponse>;
 
+// UseEditParams --- START
 type EditParamsDict = {
   [key: string]: string | number;
 }
@@ -64,6 +75,11 @@ const useDetaultFetch: UseFetch = () => {
 export function simpleReactQuery<
   T extends TData,
   E extends string,
+  ListResponse = T[],
+  GetResponse = T,
+  CreateResponse = T,
+  UpdateResponse = T,
+  DeleteResponse = void
 >({
   name, baseUrl, useEditParams = useDefaultEditParams, useFetch = useDetaultFetch,
 }: {
@@ -71,17 +87,26 @@ export function simpleReactQuery<
   baseUrl: string;
   useEditParams?: UseEditParams;
   useFetch?: UseFetch;
-}): RData<E> {
+}): RData<
+  E,
+  ListResponse,
+  GetResponse,
+  CreateResponse,
+  UpdateResponse,
+  DeleteResponse
+> {
 
   const capitiledName = capitalizeFirstLetter(name);
 
-  const getListApi = async (_fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict) => {
-    console.log({ editUrl, params, res: editUrl({
-      baseUrl: `${baseUrl}/${name}s`,
-      name,
-      type: "GET",
-      params,
-    }) })
+  const getListApi = async (_fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict): Promise<ListResponse> => {
+    console.log({
+      editUrl, params, res: editUrl({
+        baseUrl: `${baseUrl}/${name}s`,
+        name,
+        type: "GET",
+        params,
+      })
+    })
     const response = await _fetch(editUrl({
       baseUrl: `${baseUrl}/${name}s`,
       name,
@@ -94,7 +119,7 @@ export function simpleReactQuery<
     return response.json();
   };
 
-  const getApi = async (id: number, _fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict) => {
+  const getApi = async (id: number, _fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict): Promise<GetResponse> => {
     const response = await _fetch(editUrl({
       baseUrl: `${baseUrl}/${name}/${id}`,
       name,
@@ -108,7 +133,7 @@ export function simpleReactQuery<
     return response.json();
   };
 
-  const createApi = async (data: Partial<T>, _fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict) => {
+  const createApi = async (data: Partial<T>, _fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict): Promise<CreateResponse> => {
     const response = await _fetch(editUrl({
       baseUrl: `${baseUrl}/${name}`,
       name,
@@ -122,7 +147,7 @@ export function simpleReactQuery<
     return response.json();
   };
 
-  const updateApi = async (data: T & { id: number }, _fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict) => {
+  const updateApi = async (data: T & { id: number }, _fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict): Promise<UpdateResponse> => {
     const response = await _fetch(editUrl({
       baseUrl: `${baseUrl}/${name}/${data.id}`,
       name,
@@ -178,8 +203,7 @@ export function simpleReactQuery<
 
     return useMutation({
       mutationFn: (data: Partial<T>) => createApi(data, _fetch, editUrl, keyParams),
-      onSuccess: (data: T) => {
-        queryClient.setQueryData([name, { id: data.id }], data);
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
       },
     });
@@ -192,8 +216,7 @@ export function simpleReactQuery<
 
     return useMutation({
       mutationFn: (data: T & { id: number }) => updateApi(data, _fetch, editUrl, keyParams),
-      onSuccess: (data: T) => {
-        queryClient.setQueryData([name, { id: data.id }], data);
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
       },
     });
@@ -206,8 +229,7 @@ export function simpleReactQuery<
 
     return useMutation({
       mutationFn: (data: number) => deleteApi(data, _fetch, editUrl, keyParams),
-      onSuccess: (_, id) => {
-        queryClient.setQueryData([name, { id }], undefined);
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
       },
     });
@@ -220,5 +242,12 @@ export function simpleReactQuery<
     [`useCreate${capitiledName}Mutation`]: useCreateHook,
     [`useUpdate${capitiledName}Mutation`]: useUpdateHook,
     [`useDelete${capitiledName}Mutation`]: useDeleteHook,
-  } as RData<E>;
+  } as RData<
+    E,
+    ListResponse,
+    GetResponse,
+    CreateResponse,
+    UpdateResponse,
+    DeleteResponse
+  >;
 }
