@@ -42,6 +42,8 @@ const updateMutation = useUpdateProductMutation();
 const deleteMutation = useDeleteProductMutation();
 ```
 
+This is a basic usage. For more advanced cases you could modify generated hooks.
+
 ### Editing URL Parameters
 
 Modify API request URLs on the fly using `useEditParams`. This hook allows you to append base URLs to your endpoints dynamically.
@@ -56,7 +58,7 @@ const useEditParams: UseEditParams = () => {
 }
 ```
 
-### Fetching Data
+### Custom Fetching Data
 
 ```
 const useFetch: UseFetch = () => {
