@@ -96,19 +96,12 @@ export function simpleReactQuery<
   DeleteResponse
 > {
 
+  const pluralizedName = `${name}s`;
   const capitiledName = capitalizeFirstLetter(name);
 
   const getListApi = async (_fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict): Promise<ListResponse> => {
-    console.log({
-      editUrl, params, res: editUrl({
-        baseUrl: `${baseUrl}/${name}s`,
-        name,
-        type: "GET",
-        params,
-      })
-    })
     const response = await _fetch(editUrl({
-      baseUrl: `${baseUrl}/${name}s`,
+      baseUrl: `${baseUrl}/${pluralizedName}`,
       name,
       type: "GET",
       params,
@@ -121,7 +114,7 @@ export function simpleReactQuery<
 
   const getApi = async (id: number, _fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict): Promise<GetResponse> => {
     const response = await _fetch(editUrl({
-      baseUrl: `${baseUrl}/${name}/${id}`,
+      baseUrl: `${baseUrl}/${pluralizedName}/${id}`,
       name,
       type: "GET",
       id,
@@ -135,7 +128,7 @@ export function simpleReactQuery<
 
   const createApi = async (data: Partial<T>, _fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict): Promise<CreateResponse> => {
     const response = await _fetch(editUrl({
-      baseUrl: `${baseUrl}/${name}`,
+      baseUrl: `${baseUrl}/${pluralizedName}`,
       name,
       type: "POST",
       params,
@@ -149,7 +142,7 @@ export function simpleReactQuery<
 
   const updateApi = async (data: T & { id: number }, _fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict): Promise<UpdateResponse> => {
     const response = await _fetch(editUrl({
-      baseUrl: `${baseUrl}/${name}/${data.id}`,
+      baseUrl: `${baseUrl}/${pluralizedName}/${data.id}`,
       name,
       type: "PUT",
       id: data.id,
@@ -164,7 +157,7 @@ export function simpleReactQuery<
 
   const deleteApi = async (id: number, _fetch: TFetch, editUrl: EditUrlFunc, params: EditParamsDict) => {
     const response = await _fetch(editUrl({
-      baseUrl: `${baseUrl}/${name}/${id}`,
+      baseUrl: `${baseUrl}/${pluralizedName}/${id}`,
       name,
       type: "DELETE",
       id,
