@@ -1,10 +1,12 @@
-# Reduce React API Boilerplate Code
+# `react-query-simple` README.md
 
-This npm package provides a streamlined way to interact with your React components and API layer, significantly reducing the amount of boilerplate code required in your applications. Utilizing a series of hooks and utilities, you can easily manage API calls and state management in a more concise and readable manner.
+## Introduction
+
+`react-query-simple` is a lightweight npm package designed to streamline the process of working with the API layer in React applications. This package addresses the common challenge of writing repetitive boilerplate code and managing concerns such as caching, requesting, and accessing data. Leveraging the power of React Query, react-query-simple simplifies the development experience by providing a set of ready-to-use hooks generated from a single function call.
 
 ## Features
 - **Reduced Boilerplate**: Automate repetitive tasks related to API calls, focusing on your application logic instead.
-- **Flexibility: Change**: Change the configuration as needed to match your API structure and requirements.
+- **Flexibility**: Change the configuration as needed to match your API structure and requirements.
 - **Easy Cache Invalidation**: With structured and predictable query keys, invalidating the cache becomes straightforward.
 
 ## Installation

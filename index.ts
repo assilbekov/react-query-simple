@@ -68,11 +68,11 @@ const useDefaultEditParams: UseEditParams = () => {
   };
 }
 
-const useDetaultFetch: UseFetch = () => {
+const useDefaultFetch: UseFetch = () => {
   return fetch;
 }
 
-export function simpleReactQuery<
+export function reactQuerySimple<
   T extends TData,
   E extends string,
   ListResponse = T[],
@@ -81,7 +81,7 @@ export function simpleReactQuery<
   UpdateResponse = T,
   DeleteResponse = void
 >({
-  name, baseUrl, useEditParams = useDefaultEditParams, useFetch = useDetaultFetch,
+  name, baseUrl, useEditParams = useDefaultEditParams, useFetch = useDefaultFetch,
 }: {
   name: E;
   baseUrl: string;
