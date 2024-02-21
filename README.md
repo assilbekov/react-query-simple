@@ -20,7 +20,7 @@ npm install react-query-simple
 Get ready to use React Query hooks to cover all your needs:
 
 ```
-import { simpleReactQuery } from 'react-query-simple';
+import { reactQuerySimple } from 'react-query-simple';
 
 export const {
   useGetProductsQuery,
@@ -28,7 +28,7 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
-} = simpleReactQuery({
+} = reactQuerySimple({
   name: "product",
   baseUrl: "https://dummyjson.com",
 });
@@ -80,7 +80,7 @@ const useFetch: UseFetch = () => {
 
 ### Use modified factory
 
-Just provide `simpleReactQuery` with a custom URL editor and modified `fetch`.
+Just provide `reactQuerySimple` with a custom URL editor and modified `fetch`.
 
 ```
 export const {
@@ -89,7 +89,7 @@ export const {
   useCreatePostMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
-} = simpleReactQuery<Post, "post", ListPostsResponse>({
+} = reactQuerySimple<Post, "post", ListPostsResponse>({
   name: "post",
   baseUrl: "",
   useEditParams,
