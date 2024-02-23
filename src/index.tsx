@@ -419,7 +419,7 @@ const queryClient = new QueryClient({
   }
 });
 
-export const ReactQuerySimpleProvider = (props: any) => {
+export const ReactQuerySimpleProvider: React.FC = (props: any) => {
   return (
     <QueryClientProvider client={queryClient}>
       {props.children}
