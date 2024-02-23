@@ -1,9 +1,8 @@
 {
   "name": "react-query-simple",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Work with react-query in a simple way and don't write boilerplate code",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.ts",
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
