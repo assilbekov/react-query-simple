@@ -1,21 +1,13 @@
 {
   "name": "react-query-simple",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Work with react-query in a simple way and don't write boilerplate code",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "@tanstack/react-query": "^5.x",
-    "react": "^18.x",
-    "react-dom": "^18.x"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.58",
-    "typescript": "^5.3.3"
+    "@tanstack/react-query": "^5.x"
   },
   "repository": {
     "type": "git",
@@ -32,6 +24,6 @@
     "react query",
     "api calls"
   ],
-  "author": "Askar Assilbekov",
+  "author": "",
   "license": "ISC"
 }
