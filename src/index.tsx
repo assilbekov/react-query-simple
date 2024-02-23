@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   useMutation,
   useQuery,
@@ -12,6 +13,7 @@ import {
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
   MutationFunction,
+  QueryClientProvider,
 } from "@tanstack/react-query";
 
 type TID = number | string;
@@ -407,4 +409,20 @@ export function reactQuerySimple<
     CContext,
     UContext,
     DContext>
+}
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+    }
+  }
+});
+
+export const ReactQuerySimpleProvider = (props: any) => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      {props.children}
+    </QueryClientProvider>
+  )
 }

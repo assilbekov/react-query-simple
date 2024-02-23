@@ -1,6 +1,6 @@
 {
   "name": "react-query-simple",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Work with react-query in a simple way and don't write boilerplate code",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "@tanstack/react-query": "^5.x"
+    "@tanstack/react-query": "^5.x",
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.58",
