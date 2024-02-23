@@ -44,12 +44,12 @@ type TFetch = (input: RequestInfo | URL, init?: RequestInit | undefined) => Prom
 type UseFetch = () => TFetch;
 export declare function reactQuerySimple<TEntity extends (unknown & {
     id: number | string;
-}), EName extends string, LTQueryFnData = TEntity[], GTQueryFnData = TEntity, CData = Partial<TEntity>, UData = TEntity, DData = void, LTError = DefaultError, GTError = DefaultError, CError = DefaultError, UError = DefaultError, DError = DefaultError, LTData = LTQueryFnData, GTData = GTQueryFnData, CVariables = CData, UVariables = UData, DVariables = TID, LTQueryKey extends QueryKey = QueryKey, GTQueryKey extends QueryKey = QueryKey, CContext = unknown, UContext = unknown, DContext = unknown>({ name, baseUrl, useEditParams, useFetch }: {
+}), EName extends string, LTQueryFnData = TEntity[], GTQueryFnData = TEntity, CData = Partial<TEntity>, UData = TEntity, DData = void, LTError = DefaultError, GTError = DefaultError, CError = DefaultError, UError = DefaultError, DError = DefaultError, LTData = LTQueryFnData, GTData = GTQueryFnData, CVariables = CData, UVariables = UData, DVariables = TID, LTQueryKey extends QueryKey = QueryKey, GTQueryKey extends QueryKey = QueryKey, CContext = unknown, UContext = unknown, DContext = unknown>({ name, baseUrl, queryClient, useEditParams, useFetch }: {
     name: EName;
     baseUrl: string;
+    queryClient: QueryClient;
     useEditParams?: UseEditParams;
     useFetch?: UseFetch;
 }): RData<EName, LTQueryFnData, GTQueryFnData, CData, UData, DData, LTError, GTError, CError, UError, DError, LTData, GTData, CVariables, UVariables, DVariables, LTQueryKey, GTQueryKey, CContext, UContext, DContext>;
-export declare const queryClientSimple: QueryClient;
 export {};
 //# sourceMappingURL=index.d.ts.map

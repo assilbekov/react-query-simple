@@ -1,7 +1,6 @@
 import {
   useMutation,
   useQuery,
-  useQueryClient,
   UseMutationResult,
   UseQueryResult,
   DefaultError,
@@ -201,9 +200,10 @@ export function reactQuerySimple<
   CContext = unknown,
   UContext = unknown,
   DContext = unknown,
->({ name, baseUrl, useEditParams = useDefaultEditParams, useFetch = useDefaultFetch }: {
+>({ name, baseUrl, queryClient, useEditParams = useDefaultEditParams, useFetch = useDefaultFetch }: {
   name: EName;
   baseUrl: string;
+  queryClient: QueryClient,
   useEditParams?: UseEditParams;
   useFetch?: UseFetch;
 }): RData<
@@ -332,7 +332,6 @@ export function reactQuerySimple<
     TContext = unknown>(options?: UseMutationOptions<TData, TError, TVariables, TContext>,
       _queryClient?: QueryClient): UseMutationResult<TData, TError, TVariables, TContext> {
     const _fetch = useFetch();
-    const queryClient = useQueryClient();
     const { editUrl, keyParams } = useEditParams();
 
     return useMutation({
@@ -351,7 +350,6 @@ export function reactQuerySimple<
     TContext = unknown>(options?: UseMutationOptions<TData, TError, TVariables, TContext>,
       _queryClient?: QueryClient): UseMutationResult<TData, TError, TVariables, TContext> {
     const _fetch = useFetch();
-    const queryClient = useQueryClient();
     const { editUrl, keyParams } = useEditParams();
 
     return useMutation({
@@ -370,7 +368,6 @@ export function reactQuerySimple<
     TContext = unknown>(options?: UseMutationOptions<TData, TError, TVariables, TContext>,
       _queryClient?: QueryClient): UseMutationResult<TData, TError, TVariables, TContext> {
     const _fetch = useFetch();
-    const queryClient = useQueryClient();
     const { editUrl, keyParams } = useEditParams();
 
     return useMutation({
@@ -411,5 +408,3 @@ export function reactQuerySimple<
     UContext,
     DContext>
 }
-
-export const queryClientSimple = new QueryClient();

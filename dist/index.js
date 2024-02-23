@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.queryClientSimple = exports.reactQuerySimple = void 0;
+exports.reactQuerySimple = void 0;
 const react_query_1 = require("@tanstack/react-query");
 const capitalizeFirstLetter = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
@@ -26,7 +26,7 @@ const useDefaultFetch = () => {
         return response.json();
     });
 };
-function reactQuerySimple({ name, baseUrl, useEditParams = useDefaultEditParams, useFetch = useDefaultFetch }) {
+function reactQuerySimple({ name, baseUrl, queryClient, useEditParams = useDefaultEditParams, useFetch = useDefaultFetch }) {
     const pluralizedName = `${name}s`;
     const capitiledName = capitalizeFirstLetter(name);
     const getListApi = (_fetch, editUrl, params) => __awaiter(this, void 0, void 0, function* () {
@@ -96,7 +96,6 @@ function reactQuerySimple({ name, baseUrl, useEditParams = useDefaultEditParams,
     }
     function useCreateMutation(options, _queryClient) {
         const _fetch = useFetch();
-        const queryClient = (0, react_query_1.useQueryClient)();
         const { editUrl, keyParams } = useEditParams();
         return (0, react_query_1.useMutation)(Object.assign({ mutationFn: ((data) => __awaiter(this, void 0, void 0, function* () { return createApi(data, _fetch, editUrl, keyParams); })), onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
@@ -104,7 +103,6 @@ function reactQuerySimple({ name, baseUrl, useEditParams = useDefaultEditParams,
     }
     function useUpdateMutation(options, _queryClient) {
         const _fetch = useFetch();
-        const queryClient = (0, react_query_1.useQueryClient)();
         const { editUrl, keyParams } = useEditParams();
         return (0, react_query_1.useMutation)(Object.assign({ mutationFn: ((data) => __awaiter(this, void 0, void 0, function* () { return updateApi(data, _fetch, editUrl, keyParams); })), onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
@@ -112,7 +110,6 @@ function reactQuerySimple({ name, baseUrl, useEditParams = useDefaultEditParams,
     }
     function useDeleteMutation(options, _queryClient) {
         const _fetch = useFetch();
-        const queryClient = (0, react_query_1.useQueryClient)();
         const { editUrl, keyParams } = useEditParams();
         return (0, react_query_1.useMutation)(Object.assign({ mutationFn: ((data) => __awaiter(this, void 0, void 0, function* () { return deleteApi(data, _fetch, editUrl, keyParams); })), onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
@@ -127,4 +124,3 @@ function reactQuerySimple({ name, baseUrl, useEditParams = useDefaultEditParams,
     };
 }
 exports.reactQuerySimple = reactQuerySimple;
-exports.queryClientSimple = new react_query_1.QueryClient();
