@@ -21,16 +21,13 @@ const useDefaultEditParams = () => {
     };
 };
 const useDefaultFetch = () => {
-    return (input, init) => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield fetch(input, Object.assign({ headers: { 'Content-Type': 'application/json' } }, init));
-        return response.json();
-    });
+    return fetch;
 };
-function reactQuerySimple({ name, baseUrl, queryClient, useEditParams = useDefaultEditParams, useFetch = useDefaultFetch }) {
+function reactQuerySimple({ name, baseUrl, useEditParams = useDefaultEditParams, useFetch = useDefaultFetch, }) {
     const pluralizedName = `${name}s`;
     const capitiledName = capitalizeFirstLetter(name);
     const getListApi = (_fetch, editUrl, params) => __awaiter(this, void 0, void 0, function* () {
-        return yield _fetch(editUrl({
+        const response = yield _fetch(editUrl({
             baseUrl: `${baseUrl}/${pluralizedName}`,
             name,
             type: "GET",
@@ -38,9 +35,10 @@ function reactQuerySimple({ name, baseUrl, queryClient, useEditParams = useDefau
         }), {
             method: "GET",
         });
+        return response.json();
     });
     const getApi = (id, _fetch, editUrl, params) => __awaiter(this, void 0, void 0, function* () {
-        return yield _fetch(editUrl({
+        const response = yield _fetch(editUrl({
             baseUrl: `${baseUrl}/${pluralizedName}/${id}`,
             name,
             type: "GET",
@@ -49,9 +47,10 @@ function reactQuerySimple({ name, baseUrl, queryClient, useEditParams = useDefau
         }), {
             method: "GET",
         });
+        return response.json();
     });
     const createApi = (data, _fetch, editUrl, params) => __awaiter(this, void 0, void 0, function* () {
-        return yield _fetch(editUrl({
+        const response = yield _fetch(editUrl({
             baseUrl: `${baseUrl}/${pluralizedName}`,
             name,
             type: "POST",
@@ -60,9 +59,10 @@ function reactQuerySimple({ name, baseUrl, queryClient, useEditParams = useDefau
             method: "POST",
             body: JSON.stringify(data),
         });
+        return response.json();
     });
     const updateApi = (data, _fetch, editUrl, params) => __awaiter(this, void 0, void 0, function* () {
-        return yield _fetch(editUrl({
+        const response = yield _fetch(editUrl({
             baseUrl: `${baseUrl}/${pluralizedName}/${data.id}`,
             name,
             type: "PUT",
@@ -72,9 +72,10 @@ function reactQuerySimple({ name, baseUrl, queryClient, useEditParams = useDefau
             method: "PUT",
             body: JSON.stringify(data),
         });
+        return response.json();
     });
     const deleteApi = (id, _fetch, editUrl, params) => __awaiter(this, void 0, void 0, function* () {
-        return yield _fetch(editUrl({
+        const response = yield _fetch(editUrl({
             baseUrl: `${baseUrl}/${pluralizedName}/${id}`,
             name,
             type: "DELETE",
@@ -83,44 +84,63 @@ function reactQuerySimple({ name, baseUrl, queryClient, useEditParams = useDefau
         }), {
             method: "DELETE",
         });
+        return response;
     });
-    function useGetListQuery(options, queryClient) {
+    const useGetListHook = () => {
         const _fetch = useFetch();
         const { editUrl, keyParams } = useEditParams();
-        return (0, react_query_1.useQuery)(Object.assign({ queryKey: [name, { type: "list" }, keyParams], queryFn: () => __awaiter(this, void 0, void 0, function* () { return getListApi(_fetch, editUrl, keyParams); }) }, options));
-    }
-    function useGetQuery(id, options, queryClient) {
+        return (0, react_query_1.useQuery)({
+            queryKey: [name, { type: "list" }, keyParams],
+            queryFn: () => getListApi(_fetch, editUrl, keyParams),
+        });
+    };
+    const useGetHook = (id) => {
         const _fetch = useFetch();
         const { editUrl, keyParams } = useEditParams();
-        return (0, react_query_1.useQuery)(Object.assign({ queryKey: [name, { id }, keyParams], queryFn: () => __awaiter(this, void 0, void 0, function* () { return getApi(id, _fetch, editUrl, keyParams); }) }, options));
-    }
-    function useCreateMutation(options, _queryClient) {
+        return (0, react_query_1.useQuery)({
+            queryKey: [name, { id }, keyParams],
+            queryFn: () => getApi(id, _fetch, editUrl, keyParams),
+        });
+    };
+    const useCreateHook = () => {
         const _fetch = useFetch();
+        const queryClient = (0, react_query_1.useQueryClient)();
         const { editUrl, keyParams } = useEditParams();
-        return (0, react_query_1.useMutation)(Object.assign({ mutationFn: ((data) => __awaiter(this, void 0, void 0, function* () { return createApi(data, _fetch, editUrl, keyParams); })), onSuccess: () => {
-                queryClient === null || queryClient === void 0 ? void 0 : queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
-            } }, options));
-    }
-    function useUpdateMutation(options, _queryClient) {
+        return (0, react_query_1.useMutation)({
+            mutationFn: (data) => createApi(data, _fetch, editUrl, keyParams),
+            onSuccess: () => {
+                queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
+            },
+        });
+    };
+    const useUpdateHook = () => {
         const _fetch = useFetch();
+        const queryClient = (0, react_query_1.useQueryClient)();
         const { editUrl, keyParams } = useEditParams();
-        return (0, react_query_1.useMutation)(Object.assign({ mutationFn: ((data) => __awaiter(this, void 0, void 0, function* () { return updateApi(data, _fetch, editUrl, keyParams); })), onSuccess: () => {
-                queryClient === null || queryClient === void 0 ? void 0 : queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
-            } }, options));
-    }
-    function useDeleteMutation(options, _queryClient) {
+        return (0, react_query_1.useMutation)({
+            mutationFn: (data) => updateApi(data, _fetch, editUrl, keyParams),
+            onSuccess: () => {
+                queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
+            },
+        });
+    };
+    const useDeleteHook = () => {
         const _fetch = useFetch();
+        const queryClient = (0, react_query_1.useQueryClient)();
         const { editUrl, keyParams } = useEditParams();
-        return (0, react_query_1.useMutation)(Object.assign({ mutationFn: ((data) => __awaiter(this, void 0, void 0, function* () { return deleteApi(data, _fetch, editUrl, keyParams); })), onSuccess: () => {
-                queryClient === null || queryClient === void 0 ? void 0 : queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
-            } }, options));
-    }
+        return (0, react_query_1.useMutation)({
+            mutationFn: (data) => deleteApi(data, _fetch, editUrl, keyParams),
+            onSuccess: () => {
+                queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
+            },
+        });
+    };
     return {
-        [`useGet${capitiledName}sQuery`]: useGetListQuery,
-        [`useGet${capitiledName}Query`]: useGetQuery,
-        [`useCreate${capitiledName}Mutation`]: useCreateMutation,
-        [`useUpdate${capitiledName}Mutation`]: useUpdateMutation,
-        [`useDelete${capitiledName}Mutation`]: useDeleteMutation,
+        [`useGet${capitiledName}sQuery`]: useGetListHook,
+        [`useGet${capitiledName}Query`]: useGetHook,
+        [`useCreate${capitiledName}Mutation`]: useCreateHook,
+        [`useUpdate${capitiledName}Mutation`]: useUpdateHook,
+        [`useDelete${capitiledName}Mutation`]: useDeleteHook,
     };
 }
 exports.reactQuerySimple = reactQuerySimple;

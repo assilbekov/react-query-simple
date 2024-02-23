@@ -1,19 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
+    "rootDir": "./src",
+    "module": "CommonJS",
+    "target": "ES2015", // Updated target
+    "lib": ["ES2015", "DOM"], // Ensure 'DOM' is included
+    "jsx": "react" // Add this if you're using React
   },
-  "include": ["src"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx" // Include this line if your project contains JSX/TSX files
+  ],
+  "exclude": ["node_modules", "**/*.test.ts"]
 }
