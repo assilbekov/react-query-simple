@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reactQuerySimple = void 0;
+exports.queryClientSimple = exports.reactQuerySimple = void 0;
 const react_query_1 = require("@tanstack/react-query");
 const capitalizeFirstLetter = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
@@ -127,3 +127,4 @@ function reactQuerySimple({ name, baseUrl, useEditParams = useDefaultEditParams,
     };
 }
 exports.reactQuerySimple = reactQuerySimple;
+exports.queryClientSimple = new react_query_1.QueryClient();

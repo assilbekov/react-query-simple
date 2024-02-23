@@ -50,5 +50,6 @@ export declare function reactQuerySimple<TEntity extends (unknown & {
     useEditParams?: UseEditParams;
     useFetch?: UseFetch;
 }): RData<EName, LTQueryFnData, GTQueryFnData, CData, UData, DData, LTError, GTError, CError, UError, DError, LTData, GTData, CVariables, UVariables, DVariables, LTQueryKey, GTQueryKey, CContext, UContext, DContext>;
+export declare const queryClientSimple: QueryClient;
 export {};
 //# sourceMappingURL=index.d.ts.map

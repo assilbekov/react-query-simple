@@ -411,3 +411,5 @@ export function reactQuerySimple<
     UContext,
     DContext>
 }
+
+export const queryClientSimple = new QueryClient();
