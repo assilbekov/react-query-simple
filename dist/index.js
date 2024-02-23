@@ -87,33 +87,33 @@ function reactQuerySimple({ name, baseUrl, queryClient, useEditParams = useDefau
     function useGetListQuery(options, queryClient) {
         const _fetch = useFetch();
         const { editUrl, keyParams } = useEditParams();
-        return (0, react_query_1.useQuery)(Object.assign({ queryKey: [name, { type: "list" }, keyParams], queryFn: () => __awaiter(this, void 0, void 0, function* () { return getListApi(_fetch, editUrl, keyParams); }) }, options), queryClient);
+        return (0, react_query_1.useQuery)(Object.assign({ queryKey: [name, { type: "list" }, keyParams], queryFn: () => __awaiter(this, void 0, void 0, function* () { return getListApi(_fetch, editUrl, keyParams); }) }, options));
     }
     function useGetQuery(id, options, queryClient) {
         const _fetch = useFetch();
         const { editUrl, keyParams } = useEditParams();
-        return (0, react_query_1.useQuery)(Object.assign({ queryKey: [name, { id }, keyParams], queryFn: () => __awaiter(this, void 0, void 0, function* () { return getApi(id, _fetch, editUrl, keyParams); }) }, options), queryClient);
+        return (0, react_query_1.useQuery)(Object.assign({ queryKey: [name, { id }, keyParams], queryFn: () => __awaiter(this, void 0, void 0, function* () { return getApi(id, _fetch, editUrl, keyParams); }) }, options));
     }
     function useCreateMutation(options, _queryClient) {
         const _fetch = useFetch();
         const { editUrl, keyParams } = useEditParams();
         return (0, react_query_1.useMutation)(Object.assign({ mutationFn: ((data) => __awaiter(this, void 0, void 0, function* () { return createApi(data, _fetch, editUrl, keyParams); })), onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
-            } }, options), _queryClient);
+                queryClient === null || queryClient === void 0 ? void 0 : queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
+            } }, options));
     }
     function useUpdateMutation(options, _queryClient) {
         const _fetch = useFetch();
         const { editUrl, keyParams } = useEditParams();
         return (0, react_query_1.useMutation)(Object.assign({ mutationFn: ((data) => __awaiter(this, void 0, void 0, function* () { return updateApi(data, _fetch, editUrl, keyParams); })), onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
-            } }, options), _queryClient);
+                queryClient === null || queryClient === void 0 ? void 0 : queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
+            } }, options));
     }
     function useDeleteMutation(options, _queryClient) {
         const _fetch = useFetch();
         const { editUrl, keyParams } = useEditParams();
         return (0, react_query_1.useMutation)(Object.assign({ mutationFn: ((data) => __awaiter(this, void 0, void 0, function* () { return deleteApi(data, _fetch, editUrl, keyParams); })), onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
-            } }, options), _queryClient);
+                queryClient === null || queryClient === void 0 ? void 0 : queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
+            } }, options));
     }
     return {
         [`useGet${capitiledName}sQuery`]: useGetListQuery,

@@ -305,7 +305,7 @@ export function reactQuerySimple<
       queryKey: [name, { type: "list" }, keyParams] as unknown as TQueryKey,
       queryFn: async () => getListApi(_fetch, editUrl, keyParams) as TQueryFnData,
       ...options,
-    }, queryClient);
+    });
   }
 
   function useGetQuery<
@@ -322,7 +322,7 @@ export function reactQuerySimple<
       queryKey: [name, { id }, keyParams] as unknown as TQueryKey,
       queryFn: async () => getApi(id, _fetch, editUrl, keyParams) as TQueryFnData,
       ...options,
-    }, queryClient);
+    });
   }
 
   function useCreateMutation<
@@ -337,10 +337,10 @@ export function reactQuerySimple<
     return useMutation({
       mutationFn: (async (data: Partial<TEntity>) => createApi(data, _fetch, editUrl, keyParams)) as unknown as MutationFunction<TData, TVariables>,
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
+        queryClient?.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
       },
       ...options,
-    }, _queryClient);
+    });
   }
 
   function useUpdateMutation<
@@ -355,10 +355,10 @@ export function reactQuerySimple<
     return useMutation({
       mutationFn: (async (data: TEntity) => updateApi(data, _fetch, editUrl, keyParams)) as unknown as MutationFunction<TData, TVariables>,
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
+        queryClient?.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
       },
       ...options,
-    }, _queryClient);
+    });
   }
 
   function useDeleteMutation<
@@ -373,10 +373,10 @@ export function reactQuerySimple<
     return useMutation({
       mutationFn: (async (data: number) => deleteApi(data, _fetch, editUrl, keyParams)) as unknown as MutationFunction<TData, TVariables>,
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
+        queryClient?.invalidateQueries({ queryKey: [name, { type: "list" }, keyParams] });
       },
       ...options,
-    }, _queryClient);
+    });
   }
 
   return {
