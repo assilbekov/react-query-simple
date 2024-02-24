@@ -297,7 +297,7 @@ export function reactQuerySimple<
     TData = TQueryFnData,
     TQueryKey extends QueryKey = QueryKey
   >(options?: UseQueryOptionsSimple<TQueryFnData, TError, TData, TQueryKey>,
-    queryClient?: QueryClient): UseQueryResult<TData, TError> | DefinedUseQueryResult<TData, TError> {
+    _queryClient?: QueryClient): UseQueryResult<TData, TError> | DefinedUseQueryResult<TData, TError> {
     const _fetch = useFetch();
     const { editUrl, keyParams } = useEditParams();
 
@@ -314,7 +314,7 @@ export function reactQuerySimple<
     TData = TQueryFnData,
     TQueryKey extends QueryKey = QueryKey
   >(id: TID, options?: UseQueryOptionsSimple<TQueryFnData, TError, TData, TQueryKey>,
-    queryClient?: QueryClient): UseQueryResult<TData, TError> | DefinedUseQueryResult<TData, TError> {
+    _queryClient?: QueryClient): UseQueryResult<TData, TError> | DefinedUseQueryResult<TData, TError> {
     const _fetch = useFetch();
     const { editUrl, keyParams } = useEditParams();
 
