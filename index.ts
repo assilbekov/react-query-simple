@@ -12,6 +12,7 @@ import {
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
   MutationFunction,
+  useQueryClient,
 } from "@tanstack/react-query";
 
 type TID = number | string;
@@ -200,10 +201,9 @@ export function reactQuerySimple<
   CContext = unknown,
   UContext = unknown,
   DContext = unknown,
->({ name, baseUrl, queryClient, useEditParams = useDefaultEditParams, useFetch = useDefaultFetch }: {
+>({ name, baseUrl, useEditParams = useDefaultEditParams, useFetch = useDefaultFetch }: {
   name: EName;
   baseUrl: string;
-  queryClient: QueryClient,
   useEditParams?: UseEditParams;
   useFetch?: UseFetch;
 }): RData<
@@ -332,6 +332,7 @@ export function reactQuerySimple<
     TContext = unknown>(options?: UseMutationOptions<TData, TError, TVariables, TContext>,
       _queryClient?: QueryClient): UseMutationResult<TData, TError, TVariables, TContext> {
     const _fetch = useFetch();
+    const queryClient = useQueryClient();
     const { editUrl, keyParams } = useEditParams();
 
     return useMutation({
@@ -350,6 +351,7 @@ export function reactQuerySimple<
     TContext = unknown>(options?: UseMutationOptions<TData, TError, TVariables, TContext>,
       _queryClient?: QueryClient): UseMutationResult<TData, TError, TVariables, TContext> {
     const _fetch = useFetch();
+    const queryClient = useQueryClient();
     const { editUrl, keyParams } = useEditParams();
 
     return useMutation({
@@ -368,6 +370,7 @@ export function reactQuerySimple<
     TContext = unknown>(options?: UseMutationOptions<TData, TError, TVariables, TContext>,
       _queryClient?: QueryClient): UseMutationResult<TData, TError, TVariables, TContext> {
     const _fetch = useFetch();
+    const queryClient = useQueryClient();
     const { editUrl, keyParams } = useEditParams();
 
     return useMutation({
